@@ -11,7 +11,10 @@ class AmazonProductDetailView(APIView):
             return Response(
                 {"error": "Product Id is required"}, status=status.HTTP_400_BAD_REQUEST
             )
-        product_data = Product.fetch_data(product_id)
+        try:
+            product_data = Product.fetch_data(product_id)
+        except Exception:
+            product_data = None
         if not product_data:
             return Response(
                 {"error": "Failed to retrieve product data"},
